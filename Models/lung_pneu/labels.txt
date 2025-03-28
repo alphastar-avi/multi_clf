@@ -1,0 +1,2 @@
+0 Normal CT of lungs
+1 Pneumonia CT of lungs
