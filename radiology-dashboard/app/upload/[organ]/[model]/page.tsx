@@ -6,6 +6,7 @@ import { FileUploader } from "@/components/file-uploader"
 import { BackgroundElements } from "@/components/background-elements"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import React from "react"
 
 interface UploadPageProps {
   params: {
@@ -15,14 +16,16 @@ interface UploadPageProps {
 }
 
 export default function UploadPage({ params }: UploadPageProps) {
-  const { organ, model } = params
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
+  
+  // Use React.use() to unwrap the params
+  const { organ, model } = React.use(params)
 
   const organName = organ.charAt(0).toUpperCase() + organ.slice(1)
   const modelName = model
     .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ")
 
   const handleUploadComplete = (response: any) => {

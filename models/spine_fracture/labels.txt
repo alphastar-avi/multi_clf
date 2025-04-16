@@ -1,0 +1,2 @@
+0 Cervical NORMAL
+1 Cervical FRACTURE

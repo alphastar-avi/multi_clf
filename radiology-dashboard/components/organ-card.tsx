@@ -3,9 +3,7 @@ import { type IconType } from "react-icons";
 import {
   GiBrain as Brain,        // Brain
   GiLungs as Lungs,        // Lungs
-  GiHeartBeats as Heart,   // Heart
-  GiLiver as Liver,        // Liver
-  GiKidneys as Kidneys,     // Kidneys - corrected name from "Kidney" to "Kidneys"
+  GiKidneys as Kidneys,     // Kidneys
 } from "react-icons/gi";   // Gi = Game Icons
 
 import { Bone as Spine } from "lucide-react"; // Lucide for Spine
@@ -24,10 +22,8 @@ interface OrganCardProps {
 const iconMap: Record<string, IconType> = {
   BRAIN: Brain,   
   LUNGS: Lungs,   
-  HEART: Heart,   
   SPINE: Spine,  
-  LIVER: Liver, 
-  KIDNEYS: Kidneys, // corrected name from "KIDNEY" to "KIDNEYS"
+  KIDNEYS: Kidneys,
 };
 
 export function OrganCard({ title, description, icon, href, className }: OrganCardProps) {
@@ -50,18 +46,16 @@ export function OrganCard({ title, description, icon, href, className }: OrganCa
         {/* Subtle gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-blue-50/30 dark:to-blue-900/10" />
 
-        <div className="relative">
-          <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-50 to-white text-primary shadow-[4px_4px_8px_rgba(0,0,0,0.05),_-4px_-4px_8px_rgba(255,255,255,0.9),_inset_1px_1px_1px_rgba(255,255,255,0.8)] transition-all duration-500 group-hover:shadow-[6px_6px_10px_rgba(0,0,0,0.08),_-6px_-6px_10px_rgba(255,255,255,1),_inset_1px_1px_1px_rgba(255,255,255,0.9)] dark:from-slate-700 dark:to-slate-800 dark:shadow-[4px_4px_8px_rgba(0,0,0,0.2),_-4px_-4px_8px_rgba(30,41,59,0.5),_inset_1px_1px_1px_rgba(30,41,59,0.2)] dark:group-hover:shadow-[6px_6px_10px_rgba(0,0,0,0.3),_-6px_-6px_10px_rgba(30,41,59,0.6),_inset_1px_1px_1px_rgba(30,41,59,0.2)]">
-            <IconComponent className="h-8 w-8" />
-          </div>
+        <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-blue-50 to-white text-primary shadow-[4px_4px_8px_rgba(0,0,0,0.05),_-4px_-4px_8px_rgba(255,255,255,0.9),_inset_1px_1px_1px_rgba(255,255,255,0.8)] transition-all duration-500 group-hover:shadow-[6px_6px_10px_rgba(0,0,0,0.08),_-6px_-6px_10px_rgba(255,255,255,1),_inset_1px_1px_1px_rgba(255,255,255,0.9)] dark:from-slate-700 dark:to-slate-800 dark:shadow-[4px_4px_8px_rgba(0,0,0,0.2),_-4px_-4px_8px_rgba(30,41,59,0.5),_inset_1px_1px_1px_rgba(30,41,59,0.2)] dark:group-hover:shadow-[6px_6px_10px_rgba(0,0,0,0.3),_-6px_-6px_10px_rgba(30,41,59,0.6),_inset_1px_1px_1px_rgba(30,41,59,0.2)]">
+          <IconComponent className="h-8 w-8" />
+        </div>
 
-          <h3 className="mb-3 text-2xl font-bold text-slate-900 dark:text-slate-50">{title}</h3>
-          <p className="mb-6 text-slate-600 dark:text-slate-400">{description}</p>
+        <h3 className="mb-3 text-2xl font-bold text-slate-900 dark:text-slate-50">{title}</h3>
+        <p className="mb-6 text-slate-600 dark:text-slate-400">{description}</p>
 
-          <div className="flex items-center text-sm font-medium text-primary">
-            <span>View models</span>
-            <div className="ml-2 transition-transform duration-300 group-hover:translate-x-2">→</div>
-          </div>
+        <div className="flex items-center text-sm font-medium text-primary">
+          <span>View models</span>
+          <div className="ml-2 transition-transform duration-300 group-hover:translate-x-2">→</div>
         </div>
       </div>
     </Link>

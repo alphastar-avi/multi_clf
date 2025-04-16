@@ -7,12 +7,30 @@ import { Upload, X, FileText, ImageIcon, Film } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { uploadImage, uploadVideo } from "@/lib/api"
+import { useParams } from "next/navigation"
 
 interface FileUploaderProps {
   onUploadComplete: (response: any) => void
 }
 
+// Map URL parameters to model IDs
+const MODEL_ID_MAP: Record<string, Record<string, string>> = {
+  "lungs": {
+    "pneumonia-classification": "lungs_pneu"
+  },
+  "brain": {
+    "stroke-analysis": "brain_stroke"
+  },
+  "kidneys": {
+    "stone-detection": "kidney_stone"
+  },
+  "spine": {
+    "fracture-detection": "spine_fracture"
+  }
+}
+
 export function FileUploader({ onUploadComplete }: FileUploaderProps) {
+  const params = useParams()
   const [isDragging, setIsDragging] = useState(false)
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
@@ -21,6 +39,39 @@ export function FileUploader({ onUploadComplete }: FileUploaderProps) {
   const [processingStatus, setProcessingStatus] = useState("")
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Get the model ID based on URL parameters
+  const getModelId = () => {
+    const organ = params.organ as string
+    const model = params.model as string
+    
+    if (!organ || !model) {
+      throw new Error("Missing organ or model parameters")
+    }
+
+    // Try to find the model ID in the map
+    const modelId = MODEL_ID_MAP[organ]?.[model]
+    
+    // If not found, try to find by partial match
+    if (!modelId) {
+      const organModels = MODEL_ID_MAP[organ]
+      if (organModels) {
+        const matchingKey = Object.keys(organModels).find(key => 
+          model.toLowerCase().includes(key.toLowerCase()) || 
+          key.toLowerCase().includes(model.toLowerCase())
+        )
+        if (matchingKey) {
+          return organModels[matchingKey]
+        }
+      }
+    }
+
+    if (!modelId) {
+      throw new Error(`Invalid organ/model combination: ${organ}/${model}`)
+    }
+
+    return modelId
+  }
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
@@ -70,6 +121,8 @@ export function FileUploader({ onUploadComplete }: FileUploaderProps) {
     setError(null)
     
     try {
+      const modelId = getModelId()
+      
       // Simulate progress during upload/processing
       const progressInterval = setInterval(() => {
         setProgress((prev) => {
@@ -86,10 +139,10 @@ export function FileUploader({ onUploadComplete }: FileUploaderProps) {
       
       if (file.type.startsWith("image/")) {
         setProcessingStatus("Processing image...")
-        response = await uploadImage(file)
+        response = await uploadImage(file, modelId)
       } else if (file.type.startsWith("video/")) {
         setProcessingStatus("Extracting and analyzing frames...")
-        response = await uploadVideo(file)
+        response = await uploadVideo(file, modelId)
       } else {
         throw new Error("Unsupported file type")
       }
@@ -103,7 +156,7 @@ export function FileUploader({ onUploadComplete }: FileUploaderProps) {
       onUploadComplete(response)
     } catch (err) {
       setIsProcessing(false)
-      setError(err instanceof Error ? err.message : "An unknown error occurred")
+      setError(err instanceof Error ? err.message : "An error occurred during upload")
       console.error("Upload error:", err)
     }
   }

@@ -1,0 +1,2 @@
+0 Normal_brain
+1 Stroke_brain

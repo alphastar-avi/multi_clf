@@ -61,44 +61,12 @@ function getModelsForOrgan(organ: string) {
         description: "Detect pneumonia with high accuracy using CT scans",
         icon: "Lungs",
       },
-      {
-        id: "covid-19-analysis",
-        title: "COVID-19 Lung Analysis",
-        description: "Rapid detection for COVID-19 related lung changes",
-        icon: "Virus",
-      },
-      {
-        id: "nodule-detection",
-        title: "Lung Nodule Detection",
-        description: "Identify small nodules with detailed imaging analysis",
-        icon: "Target",
-      },
     ],
     brain: [
-      {
-        id: "tumor-detection",
-        title: "Brain Tumor Detection",
-        description: "Identify and classify brain tumors from MRI scans",
-        icon: "Brain",
-      },
       {
         id: "stroke-analysis",
         title: "Stroke Analysis",
         description: "Detect early signs of stroke from brain imaging",
-        icon: "Activity",
-      },
-    ],
-    heart: [
-      {
-        id: "cardiac-assessment",
-        title: "Cardiac Assessment",
-        description: "Comprehensive analysis of cardiac structures",
-        icon: "Heart",
-      },
-      {
-        id: "valve-analysis",
-        title: "Valve Analysis",
-        description: "Detailed assessment of heart valve function",
         icon: "Activity",
       },
     ],
@@ -109,26 +77,6 @@ function getModelsForOrgan(organ: string) {
         description: "Identify spinal fractures and abnormalities",
         icon: "ActivitySquare",
       },
-      {
-        id: "disc-analysis",
-        title: "Disc Analysis",
-        description: "Evaluate intervertebral disc health and issues",
-        icon: "CircleDot",
-      },
-    ],
-    liver: [
-      {
-        id: "lesion-detection",
-        title: "Lesion Detection",
-        description: "Identify and classify liver lesions",
-        icon: "Droplets",
-      },
-      {
-        id: "cirrhosis-assessment",
-        title: "Cirrhosis Assessment",
-        description: "Evaluate liver texture for signs of cirrhosis",
-        icon: "Scan",
-      },
     ],
     kidneys: [
       {
@@ -136,12 +84,6 @@ function getModelsForOrgan(organ: string) {
         title: "Stone Detection",
         description: "Identify kidney stones from CT scans",
         icon: "Kidney",
-      },
-      {
-        id: "tumor-analysis",
-        title: "Tumor Analysis",
-        description: "Detect and classify kidney tumors",
-        icon: "Target",
       },
     ],
   }

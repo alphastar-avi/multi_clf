@@ -19,7 +19,7 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <OrganCard
             title="Brain"
             description="CT/MRI Analysis for neurological assessment"
@@ -33,22 +33,10 @@ export default function Dashboard() {
             href="/models/lungs"
           />
           <OrganCard
-            title="Heart"
-            description="Analysis for cardiac structures and anomalies"
-            icon="Heart"
-            href="/models/heart"
-          />
-          <OrganCard
             title="Spine"
             description="Spinal scans and fracture detection"
             icon="Spine"
             href="/models/spine"
-          />
-          <OrganCard
-            title="Liver"
-            description="Abdominal imaging analysis for liver conditions"
-            icon="Liver"
-            href="/models/liver"
           />
           <OrganCard
             title="Kidneys"

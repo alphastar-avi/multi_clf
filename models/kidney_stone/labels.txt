@@ -1,0 +1,2 @@
+0 Normal_Kidney
+1 Kidney_Stone

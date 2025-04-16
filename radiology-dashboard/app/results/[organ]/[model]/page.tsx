@@ -83,7 +83,7 @@ export default function ResultsPage({ params }: ResultsPageProps) {
                 id: `Frame ${String(index).padStart(5, '0')}`,
                 confidence,
                 condition: predictedClass,
-                thumbnail: `/frames/${filename}`,
+                thumbnail: `${API_URL}/frames/${filename}`,
                 predictions: result.predictions || {},
               };
             });
