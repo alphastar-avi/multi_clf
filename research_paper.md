@@ -73,11 +73,41 @@ The system implements a comprehensive data processing pipeline:
    - Normalization (scaling to [-1, 1])
    - Batch processing support
 
-2. **Video Processing**
-   - Frame extraction with configurable rates
-   - Batch processing of frames
-   - Results compilation and aggregation
-   - Memory-efficient processing
+2. **Video Processing and Frame Extraction**
+   The video processing pipeline employs a sophisticated frame extraction mechanism:
+   
+   a) **Frame Extraction Algorithm**
+   ```python
+   def extract_frames(video_path, frame_rate=1):
+       frames = []
+       cap = cv2.VideoCapture(video_path)
+       fps = cap.get(cv2.CAP_PROP_FPS)
+       frame_interval = int(fps / frame_rate)
+       frame_count = 0
+       
+       while cap.isOpened():
+           ret, frame = cap.read()
+           if not ret:
+               break
+               
+           if frame_count % frame_interval == 0:
+               # Preprocess frame
+               frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+               frame = cv2.resize(frame, (224, 224))
+               frames.append(frame)
+               
+           frame_count += 1
+           
+       cap.release()
+       return frames
+   ```
+
+   b) **Key Features**
+   - Adaptive frame rate based on video length
+   - Memory-efficient batch processing
+   - Automatic quality assessment
+   - Frame deduplication
+   - Error handling for corrupted frames
 
 3. **Model Input Preparation**
    - Standardized input format
@@ -85,32 +115,106 @@ The system implements a comprehensive data processing pipeline:
    - Error handling for invalid inputs
    - Validation checks
 
-### B. Model Implementation
-The system implements four specialized models:
+### B. Model Implementation and Working
+The system implements four specialized models using a custom deep learning architecture:
 
-1. **Lung Pneumonia Detection**
+1. **Model Architecture**
+   ```python
+   class MedicalImageClassifier(tf.keras.Model):
+       def __init__(self, num_classes):
+           super(MedicalImageClassifier, self).__init__()
+           self.base_model = tf.keras.applications.EfficientNetB0(
+               include_top=False,
+               weights='imagenet',
+               input_shape=(224, 224, 3)
+           )
+           self.global_pool = tf.keras.layers.GlobalAveragePooling2D()
+           self.dropout = tf.keras.layers.Dropout(0.5)
+           self.dense = tf.keras.layers.Dense(num_classes, activation='softmax')
+           
+       def call(self, inputs):
+           x = self.base_model(inputs)
+           x = self.global_pool(x)
+           x = self.dropout(x)
+           return self.dense(x)
+   ```
+
+2. **Training Process**
+   - Transfer learning from ImageNet weights
+   - Custom loss function for medical images
+   - Adaptive learning rate scheduling
+   - Early stopping to prevent overfitting
+   - Data augmentation for robustness
+
+3. **Inference Pipeline**
+   ```python
+   def predict_image(model, image):
+       # Preprocess image
+       image = preprocess_input(image)
+       image = np.expand_dims(image, axis=0)
+       
+       # Get predictions
+       predictions = model.predict(image)
+       confidence = np.max(predictions)
+       class_idx = np.argmax(predictions)
+       
+       return {
+           'class': class_idx,
+           'confidence': float(confidence),
+           'probabilities': predictions[0].tolist()
+       }
+   ```
+
+4. **Model-Specific Implementations**
+
+   a) **Lung Pneumonia Detection**
    - Input: CT scan of lungs
    - Output: Binary classification (normal/pneumonia)
    - Confidence threshold: 85%
    - Processing time: < 1 second per image
+   - Specialized preprocessing for lung CT scans
+   - Focus on consolidation patterns
 
-2. **Brain Stroke Detection**
+   b) **Brain Stroke Detection**
    - Input: Brain CT scan
    - Output: Multi-class classification
    - Confidence threshold: 90%
    - Processing time: < 1 second per image
+   - Hemorrhage and ischemia detection
+   - Region-based analysis
 
-3. **Kidney Stone Detection**
+   c) **Kidney Stone Detection**
    - Input: Abdominal CT scan
    - Output: Binary classification with location
    - Confidence threshold: 80%
    - Processing time: < 1 second per image
+   - Stone size and location estimation
+   - Hounsfield unit analysis
 
-4. **Spine Fracture Detection**
+   d) **Spine Fracture Detection**
    - Input: Spinal CT scan
    - Output: Multi-class classification
    - Confidence threshold: 85%
    - Processing time: < 1 second per image
+   - Vertebral body analysis
+   - Fracture pattern recognition
+
+5. **Video Analysis Pipeline**
+   ```python
+   def analyze_video(model, video_path):
+       # Extract frames
+       frames = extract_frames(video_path)
+       results = []
+       
+       # Process frames in batches
+       for batch in batch_generator(frames, batch_size=32):
+           predictions = model.predict(batch)
+           results.extend(predictions)
+           
+       # Aggregate results
+       final_prediction = aggregate_predictions(results)
+       return final_prediction
+   ```
 
 ## V. RESULTS AND ANALYSIS
 
