@@ -4,6 +4,14 @@ This repository presents a comprehensive deep learning-based medical image analy
 
 ---
 
+
+
+
+https://github.com/user-attachments/assets/70985e8a-8e4d-4af8-8298-8a2216c414ba
+
+
+
+
 ## Features
 
 - Multi-disease detection: Pneumonia, Stroke, Kidney Stones, Spine Fractures
