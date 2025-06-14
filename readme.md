@@ -23,21 +23,6 @@ https://github.com/user-attachments/assets/70985e8a-8e4d-4af8-8298-8a2216c414ba
 
 ---
 
-## Table of Contents
-
-- [Installation](#installation)
-- [System Requirements](#system-requirements)
-- [Usage](#usage)
-- [Architecture](#architecture)
-- [Model Details](#model-details)
-- [Performance](#performance)
-- [Example Code](#example-code)
-- [Clinical Relevance](#clinical-relevance)
-- [References](#references)
-- [License](#license)
-
----
-
 ## Installation
 
 ### Backend (FastAPI)
