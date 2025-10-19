@@ -1,6 +1,6 @@
 # Multi-Modal Medical Image Analysis System
 
-This repository presents a comprehensive deep learning-based medical image analysis system for automated detection of multiple medical conditions using CT scans. The system supports both image and video inputs and is capable of detecting pneumonia, brain strokes, kidney stones, and spine fractures. It is designed with a modular architecture and provides a modern user interface for ease of use by medical professionals.
+This repository presents a comprehensive deep learning-based medical image analysis system for automated detection of multiple medical conditions using CT scans. The system supports both image and video inputs and is capable of detecting pneumonia, brain strokes, kidney stones, and spine fractures. It is designed with a modular architecture and provides a modern user interface for ease of use by medical professionals...
 
 ---
 
